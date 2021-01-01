@@ -1,0 +1,51 @@
+aws:
+  access_key:
+  access_secret: 
+  region: us-west-2
+  spawn_limit: 20 # Defines how many EC2s will be deployed simultaneously
+db:
+  host: localhost
+  port: 3306
+  user: root
+  passw: ''
+  name: ami_scanner
+connection:
+  users:
+    - centos
+    - ubuntu
+    - ec2-user
+    - root
+  pem: '/path/to/key.pem' # File path to the pem key
+  pem_name: 'key_name' # How the key is defined on AWS
+assessment:
+  shell_cmds:
+    users: cat /etc/passwd | grep "/bin/sh\|/bin/bash"
+    groups: cat /etc/group
+    shadow: cat /etc/shadow 
+    history: find /root /home -type f -name ".bash_history" -exec cat {} \; 
+    ssh_keys: cat ~/.ssh/id_rsa ~/.ssh/id_dsa ~/.ssh/id_ecdsa ~/.ssh/id_ed2551
+    hostname: hostname || cat /etc/hostname
+    last_users: last -i
+    motd: cat /etc/motd
+    services: netstat -atunp | grep LISTEN
+    processes: ps aux
+    uname: uname -a
+    os: cat /etc/issue.net || lsb_release -a
+    crons: ls -alht /etc/cron.*/*
+    aws_creds: cat /root/.aws/credentials /home/*/.aws/credentials
+    hosts: grep -v "^#" /etc/hosts
+    iptables: iptables -vnL || ufw status    
+    env: env
+    crontab: grep -v "^#" /etc/crontab
+    authorized_keys: find /root /home -type f -name "authorized_keys" -exec cat {} \;
+    collect: tar --ignore-failed-read -cf /tmp/%{filename} /var/spool /data /backup /var/www/ /home /root 
+    juicy_files:  'find /www /etc /root /home /data /backup  \( -iname \*.txt -o -iname \*.zip -o -iname \*.tar.gz -o -iname \*.yaml -o -iname \*.config -o -iname \*.cfg -o -iname \*.conf -o -iname \*.id_rsa -o -iname \*.db -o -iname \*.bzip2  -o -iname \*.bz2 -o -iname \*.bak -o -iname \*.key -o -iname \*.tgz -o -iname \*.rar -o -iname \*.7z -o -iname \*.bk -o -iname \*.py -o -iname \*.rb -o -iname \*.sh -o -iname \*.key  -o -iname \*.pem -o -iname \*.sqlite -o -iname \*.sql -o -iname \*.backup -o -iname \*.csv -o -iname wp-config.php -o -iname .env -o -iname .git \) -exec tar -rvf /tmp/%{filename} {} \;'
+    sudoers: grep -v -e 'Defaults' -e '^#'  /etc/sudoers
+    sudoers_folder: grep -v "^#" /etc/sudoers.d/* 
+    sts: aws sts get-caller-identity
+    redis: echo "GET *" | redis-cli 
+    redis_history: cat /home/*/.rediscli_history  
+    mysql_showdb: mysql -u root -e "show databases"
+    mysql_history: cat ~/.mysql_history 
+    jenkins: cat /var/lib/jenkins/credentials.xml
+    fstab: cat /etc/fstab
