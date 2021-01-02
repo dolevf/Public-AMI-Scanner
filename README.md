@@ -1,5 +1,5 @@
 # Public-AMI-Scanner
-Scans Public AWS AMIs
+A very dirty program which scans Public AWS AMIs and stores interesting data in a database
 
 # Configure your AWS Credentials
 Modify config.yaml and include your access_key and secret_key
@@ -7,7 +7,7 @@ Modify config.yaml and include your access_key and secret_key
 # Configure your AWS region
 Modify config.yaml to include your desired AWS region
 
-# Import sql.schema into your MySQL Server
+# Import DB Schema
 mysql -u username -p ami_scanner < schema.sql
 
 # Install dependencies
