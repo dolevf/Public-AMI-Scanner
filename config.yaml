@@ -1,6 +1,6 @@
 aws:
   access_key:
-  access_secret: 
+  access_secret:
   region: us-west-2
   spawn_limit: 20 # Defines how many EC2s will be deployed simultaneously
 db:
@@ -16,7 +16,7 @@ connection:
     - ec2-user
     - root
   pem: '/path/to/key.pem' # File path to the pem key
-  pem_name: 'key_name' # How the key is defined on AWS
+  pem_name: 'key_name' # Name of key as defined on AWS
 assessment:
   shell_cmds:
     users: cat /etc/passwd | grep "/bin/sh\|/bin/bash"

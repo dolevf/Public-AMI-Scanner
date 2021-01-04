@@ -36,4 +36,4 @@
   `fstab` text,
   `iptables` text,
   PRIMARY KEY (`ami_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
